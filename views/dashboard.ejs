@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Hisaab</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Your Hisaab</h1>
+        <button id="themeToggle">Toggle Theme</button>
+    </header>
+    <main>
+        <a href="/hisaab/add" class="btn">Add New Hisaab</a>
+        <% if (hisaabEntries && hisaabEntries.length > 0) { %>
+            <ul class="hisaab-list">
+                <% hisaabEntries.forEach(entry => { %>
+                    <li class="hisaab-item">
+                        <h3><%= entry.description %></h3>
+                        <p>Amount: <%= entry.amount %></p>
+                        <p>Date: <%= entry.date.toLocaleDateString() %></p>
+                        <% if (entry.isEncrypted) { %>
+                            <p>Encrypted</p>
+                        <% } %>
+                        <a href="/hisaab/edit/<%= entry._id %>" class="btn">Edit</a>
+                        <a href="/hisaab/delete/<%= entry._id %>" class="btn btn-danger">Delete</a>
+                    </li>
+                <% }) %>
+            </ul>
+        <% } else { %>
+            <p>No hisaab entries yet.</p>
+        <% } %>
+    </main>
+    <script src="/js/theme.js"></script>
+</body>
+</html>
+
