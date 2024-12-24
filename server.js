@@ -30,6 +30,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
+
 // Passport config
 require('./config/passport')(passport);
 
@@ -48,4 +53,5 @@ app.use('/hisaab', require('./routes/hisaab'));
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, console.log(`Server running on port ${PORT}`));
+module.exports = app; // Add this line at the end of server.js
 
