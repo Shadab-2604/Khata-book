@@ -8,8 +8,22 @@
 </head>
 <body>
     <header>
-        <h1>Edit Hisaab</h1>
-        <button id="themeToggle">Toggle Theme</button>
+        <nav class="navbar">
+            <div class="navbar-brand">
+                <h1>Khata Book</h1>
+            </div>
+            <div class="navbar-nav">
+                <a href="/" class="nav-link">Home</a>
+                <% if (typeof user !== 'undefined' && user) { %>
+                    <a href="/dashboard" class="nav-link">Dashboard</a>
+                    <a href="/users/logout" class="nav-link">Logout</a>
+                <% } else { %>
+                    <a href="/users/login" class="nav-link">Login</a>
+                    <a href="/users/signup" class="nav-link">Sign Up</a>
+                <% } %>
+                <button id="themeToggle">🌓</button>
+            </div>
+        </nav>
     </header>
     <main>
         <form action="/hisaab/edit/<%= hisaab._id %>" method="POST">

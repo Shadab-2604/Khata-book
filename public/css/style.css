@@ -9,6 +9,7 @@
   --border-radius: 8px;
   --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   --transition: all 0.3s ease;
+  --navbar-height: 64px;
 }
 
 body {
@@ -34,28 +35,72 @@ body.dark-mode {
 header {
   background-color: var(--primary-color);
   color: white;
-  padding: 1rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  padding: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
   box-shadow: var(--box-shadow);
 }
 
-header h1 {
+.navbar {
+  max-width: 1200px;
+  margin: 0 auto;
+  height: var(--navbar-height);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1.5rem;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.navbar-brand h1 {
   margin: 0;
   font-size: 1.5rem;
+}
+
+.navbar-nav {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+}
+
+.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.nav-link.active {
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 main {
   max-width: 1200px;
   width: 100%;
-  margin: 2rem auto;
-  padding: 0 1rem;
+  margin: calc(var(--navbar-height) + 2rem) auto 2rem;
+  padding: 0 1.5rem;
   flex: 1;
+  animation: fadeIn 0.5s ease-out;
 }
 
 .btn {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
   padding: 0.7rem 1.5rem;
   background-color: var(--primary-color);
   color: white;
@@ -64,7 +109,7 @@ main {
   transition: var(--transition);
   border: none;
   cursor: pointer;
-  font-weight: bold;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -89,6 +134,7 @@ main {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 1.5rem;
+  margin-top: 2rem;
 }
 
 .hisaab-item {
@@ -99,35 +145,65 @@ main {
   transition: var(--transition);
   display: flex;
   flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.hisaab-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background-color: var(--primary-color);
 }
 
 .hisaab-item:hover {
   transform: translateY(-5px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
 }
 
 .hisaab-item h3 {
   margin-top: 0;
   color: var(--primary-color);
+  font-size: 1.25rem;
 }
 
 .hisaab-item p {
   margin: 0.5rem 0;
+  color: var(--text-color);
 }
 
 .hisaab-item .actions {
   margin-top: auto;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
+  gap: 1rem;
   padding-top: 1rem;
 }
 
 form {
+  background-color: var(--card-background);
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  max-width: 500px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  max-width: 500px;
-  margin: 0 auto;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+label {
+  font-weight: 600;
+  color: var(--text-color);
 }
 
 input[type="email"],
@@ -136,10 +212,12 @@ input[type="number"],
 input[type="text"] {
   width: 100%;
   padding: 0.8rem;
-  border: 1px solid #ccc;
+  border: 2px solid #e1e1e1;
   border-radius: var(--border-radius);
   font-size: 1rem;
   transition: var(--transition);
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
 
 input[type="email"]:focus,
@@ -148,25 +226,22 @@ input[type="number"]:focus,
 input[type="text"]:focus {
   outline: none;
   border-color: var(--primary-color);
-  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
 }
 
 .error {
   color: var(--danger-color);
-  background-color: #fadbd8;
-  padding: 0.8rem;
+  background-color: rgba(231, 76, 60, 0.1);
+  padding: 1rem;
   border-radius: var(--border-radius);
   margin-bottom: 1rem;
-  font-weight: bold;
+  font-weight: 600;
+  border-left: 4px solid var(--danger-color);
 }
 
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
-}
-
-.hisaab-item {
-  animation: fadeIn 0.5s ease-out;
 }
 
 #themeToggle {
@@ -176,52 +251,57 @@ input[type="text"]:focus {
   font-size: 1.2rem;
   cursor: pointer;
   transition: var(--transition);
+  padding: 0.5rem;
+  border-radius: 50%;
 }
 
 #themeToggle:hover {
+  background-color: rgba(255, 255, 255, 0.1);
   transform: scale(1.1);
 }
 
 @media (max-width: 768px) {
-  header {
-    flex-direction: column;
-    text-align: center;
+  .navbar {
+    padding: 0 1rem;
   }
 
-  header h1 {
-    margin-bottom: 1rem;
+  .navbar-brand h1 {
+    font-size: 1.25rem;
   }
 
   .hisaab-list {
     grid-template-columns: 1fr;
   }
 
-  .hisaab-item {
-    padding: 1rem;
+  main {
+    padding: 0 1rem;
   }
 
   .btn {
-    padding: 0.5rem 1rem;
+    padding: 0.6rem 1.2rem;
     font-size: 0.9rem;
   }
 }
 
 @media (max-width: 480px) {
-  main {
-    padding: 0 0.5rem;
+  .navbar-nav {
+    gap: 0.5rem;
+  }
+
+  .nav-link {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
   }
 
   form {
-    padding: 0 1rem;
+    padding: 1.5rem;
   }
 
   .hisaab-item .actions {
     flex-direction: column;
-    gap: 0.5rem;
   }
 
   .hisaab-item .actions .btn {
     width: 100%;
   }
 }
-
