@@ -46,7 +46,7 @@ app.use('/', require('./routes/index'));
 app.use('/users', require('./routes/users'));
 app.use('/hisaab', require('./routes/hisaab'));
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, console.log(`Server running on port ${PORT}`));
 
 

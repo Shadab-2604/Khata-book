@@ -44,6 +44,7 @@ header {
   box-shadow: var(--box-shadow);
 }
 
+
 .navbar {
   max-width: 1200px;
   margin: 0 auto;
@@ -303,5 +304,77 @@ input[type="text"]:focus {
 
   .hisaab-item .actions .btn {
     width: 100%;
+  }
+}
+
+/* Add these styles to your existing CSS */
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 30px;
+  height: 25px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 10;
+}
+
+.hamburger span {
+  width: 30px;
+  height: 3px;
+  background: white;
+  border-radius: 10px;
+  transition: all 0.3s linear;
+  position: relative;
+  transform-origin: 1px;
+}
+
+.hamburger.active span:first-child {
+  transform: rotate(45deg);
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg);
+}
+
+@media (max-width: 768px) {
+  .hamburger {
+    display: flex;
+  }
+
+  .navbar-nav {
+    position: fixed;
+    top: var(--navbar-height);
+    right: -100%;
+    height: calc(100vh - var(--navbar-height));
+    width: 100%;
+    background-color: var(--primary-color);
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 2rem;
+    transition: right 0.3s ease-in-out;
+  }
+
+  .navbar-nav.active {
+    right: 0;
+  }
+
+  .nav-link {
+    font-size: 1.2rem;
+    padding: 1rem;
+    width: 100%;
+    text-align: center;
+  }
+
+  #themeToggle {
+    margin-top: 1rem;
+    font-size: 1.5rem;
   }
 }
